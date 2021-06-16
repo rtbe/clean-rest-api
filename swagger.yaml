@@ -1,0 +1,849 @@
+definitions:
+  NewOrder:
+    properties:
+      status:
+        description: Status of an order
+        type: string
+        x-go-name: Status
+      user_id:
+        description: UUID of a user related to particular order
+        type: string
+        x-go-name: UserID
+    required:
+    - user_id
+    title: NewOrder is an information needed to create a new order.
+    type: object
+    x-go-package: github.com/rtbe/clean-rest-api/domain/entity
+  NewOrderItem:
+    properties:
+      order_id:
+        description: UUID of an order that an order item belongs to
+        type: string
+        x-go-name: OrderID
+      product_id:
+        description: UUID of a product that an order item belongs to
+        type: string
+        x-go-name: ProductID
+      quantity:
+        description: Quantity of an order item
+        format: int64
+        minimum: 0
+        type: integer
+        x-go-name: Quantity
+    required:
+    - order_id
+    - product_id
+    - quantity
+    title: NewOrderItem is an information needed to create a new order item.
+    type: object
+    x-go-package: github.com/rtbe/clean-rest-api/domain/entity
+  NewProduct:
+    properties:
+      description:
+        description: Description of a product
+        type: string
+        x-go-name: Description
+      price:
+        description: |-
+          Price of a product
+
+          gte:0.00
+        format: float
+        type: number
+        x-go-name: Price
+      stock:
+        description: |-
+          Stock of a product
+
+          gte:0
+        format: int64
+        type: integer
+        x-go-name: Stock
+      title:
+        description: Title of a product
+        type: string
+        x-go-name: Title
+    required:
+    - title
+    - description
+    - price
+    - stock
+    title: NewProduct is an information needed to create a new product.
+    type: object
+    x-go-package: github.com/rtbe/clean-rest-api/domain/entity
+  NewUser:
+    properties:
+      email:
+        description: Email of a user
+        example: user@google.com
+        type: string
+        x-go-name: Email
+      first_name:
+        description: First name of a user
+        type: string
+        x-go-name: FirstName
+      last_name:
+        description: Last name of a user
+        type: string
+        x-go-name: LastName
+      password:
+        description: Password of a user
+        type: string
+        x-go-name: Password
+      password_confirm:
+        description: Confirmation password of a user
+        type: string
+        x-go-name: PasswordConfirm
+      roles:
+        description: Set of user roles
+        items:
+          type: string
+        type: array
+        x-go-name: Roles
+      user_name:
+        description: Username of a user
+        type: string
+        x-go-name: UserName
+    required:
+    - user_name
+    - email
+    - password
+    - password_confirm
+    - roles
+    title: NewUser is an information needed to create a new user.
+    type: object
+    x-go-package: github.com/rtbe/clean-rest-api/domain/entity
+  Order:
+    properties:
+      date_created:
+        description: Date of an order creation
+        format: date-time
+        type: string
+        x-go-name: DateCreated
+      date_updated:
+        description: Date of an order last modification
+        format: date-time
+        type: string
+        x-go-name: DateUpdated
+      order_id:
+        description: UUID of order
+        type: string
+        x-go-name: ID
+      status:
+        description: Status of an order
+        type: string
+        x-go-name: Status
+      user_id:
+        description: User UUID of an order
+        type: string
+        x-go-name: UserID
+    required:
+    - user_id
+    title: Order is an particular order.
+    type: object
+    x-go-package: github.com/rtbe/clean-rest-api/domain/entity
+  OrderItem:
+    properties:
+      date_created:
+        description: Date of an order item creation
+        format: date-time
+        type: string
+        x-go-name: DateCreated
+      date_updated:
+        description: Date of an order item last modification
+        format: date-time
+        type: string
+        x-go-name: DateUpdated
+      order_id:
+        description: UUID of an order that an order item belongs to
+        type: string
+        x-go-name: OrderID
+      order_item_id:
+        description: UUID of an order item
+        type: string
+        x-go-name: ID
+      product_id:
+        description: UUID of a product that an order item belongs to
+        type: string
+        x-go-name: ProductID
+      quantity:
+        description: Quantity of an order item
+        format: int64
+        minimum: 0
+        type: integer
+        x-go-name: Quantity
+    required:
+    - order_id
+    - product_id
+    - quantity
+    title: OrderItem type is particular order.
+    type: object
+    x-go-package: github.com/rtbe/clean-rest-api/domain/entity
+  Product:
+    properties:
+      date_created:
+        description: Date of a product creation
+        format: date-time
+        type: string
+        x-go-name: DateCreated
+      date_updated:
+        description: Date of a product last modification
+        format: date-time
+        type: string
+        x-go-name: DateUpdated
+      description:
+        description: Description of a product
+        type: string
+        x-go-name: Description
+      price:
+        description: |-
+          Price of a product
+
+          gte:0.00
+        format: float
+        type: number
+        x-go-name: Price
+      product_id:
+        description: UUID of a product
+        type: string
+        x-go-name: ID
+      stock:
+        description: |-
+          Stock of a product
+
+          gte:0
+        format: int64
+        type: integer
+        x-go-name: Stock
+      title:
+        description: Title of a product
+        type: string
+        x-go-name: Title
+    required:
+    - title
+    - description
+    - price
+    - stock
+    title: Product is an particular product.
+    type: object
+    x-go-package: github.com/rtbe/clean-rest-api/domain/entity
+  StringArray:
+    items:
+      type: string
+    title: StringArray represents a one-dimensional array of the PostgreSQL character
+      types.
+    type: array
+    x-go-package: github.com/lib/pq
+  TokenPair:
+    properties:
+      access_token:
+        description: JWT access token
+        type: string
+        x-go-name: AccessToken
+      refresh_token:
+        description: JWT refresh token
+        type: string
+        x-go-name: RefreshToken
+    required:
+    - access_token
+    - refresh_token
+    title: TokenPair is an pair of access/refresh tokens.
+    type: object
+    x-go-package: github.com/rtbe/clean-rest-api/domain/entity
+  TokenPairModel:
+    properties:
+      access_token:
+        description: JWT access token
+        type: string
+        x-go-name: AccessToken
+      refresh_token:
+        description: JWT refresh token
+        type: string
+        x-go-name: RefreshToken
+    required:
+    - access_token
+    - refresh_token
+    title: TokenPairModel is an pair of access/refresh tokens.
+    type: object
+    x-go-package: github.com/rtbe/clean-rest-api/domain/entity
+  UpdateOrder:
+    properties:
+      status:
+        description: Status of an order
+        type: string
+        x-go-name: Status
+    title: UpdateOrder is an information needed to update an existing order.
+    type: object
+    x-go-package: github.com/rtbe/clean-rest-api/domain/entity
+  UpdateOrderItem:
+    properties:
+      quantity:
+        description: Quantity of an order item
+        format: int64
+        minimum: 0
+        type: integer
+        x-go-name: Quantity
+    required:
+    - quantity
+    title: UpdateOrderItem is an information needed to update an existing order item.
+    type: object
+    x-go-package: github.com/rtbe/clean-rest-api/domain/entity
+  UpdateProduct:
+    properties:
+      description:
+        description: Description of a product
+        type: string
+        x-go-name: Description
+      price:
+        description: |-
+          Price of a product
+
+          gte:0
+        format: float
+        type: number
+        x-go-name: Price
+      stock:
+        description: |-
+          Stock of a product
+
+          gte:0
+        format: int64
+        type: integer
+        x-go-name: Stock
+      title:
+        description: Title of a product
+        type: string
+        x-go-name: Title
+    required:
+    - title
+    - description
+    - price
+    - stock
+    title: UpdateProduct is an information needed to update an existing product.
+    type: object
+    x-go-package: github.com/rtbe/clean-rest-api/domain/entity
+  UpdateUser:
+    properties:
+      email:
+        description: Email of a user
+        example: user@google.com
+        type: string
+        x-go-name: Email
+      first_name:
+        description: First name of a user
+        type: string
+        x-go-name: FirstName
+      last_name:
+        description: Last name of a user
+        type: string
+        x-go-name: LastName
+      password:
+        description: Password of a user
+        type: string
+        x-go-name: Password
+      password_confirm:
+        description: Confirmation password of a user
+        type: string
+        x-go-name: PasswordConfirm
+      roles:
+        description: Set of user roles
+        items:
+          type: string
+        type: array
+        x-go-name: Roles
+      user_name:
+        description: Username of a user
+        type: string
+        x-go-name: UserName
+    title: UpdateUser is an information needed to update a existing user.
+    type: object
+    x-go-package: github.com/rtbe/clean-rest-api/domain/entity
+  User:
+    properties:
+      date_created:
+        description: Date of a user creation
+        format: date-time
+        type: string
+        x-go-name: DateCreated
+      date_updated:
+        description: Date of a user last modification
+        format: date-time
+        type: string
+        x-go-name: DateUpdated
+      email:
+        description: Email of a user
+        example: user@google.com
+        type: string
+        x-go-name: Email
+      first_name:
+        description: First name of a user
+        type: string
+        x-go-name: FirstName
+      last_name:
+        description: Last name of a user
+        type: string
+        x-go-name: LastName
+      password:
+        description: Password of a user
+        items:
+          format: uint8
+          type: integer
+        type: array
+        x-go-name: Password
+      roles:
+        $ref: '#/definitions/StringArray'
+      user_id:
+        description: The UUID of a user
+        type: string
+        x-go-name: ID
+      user_name:
+        description: Username of a user
+        type: string
+        x-go-name: UserName
+    required:
+    - user_id
+    - user_name
+    - password
+    - email
+    title: User is a particular user.
+    type: object
+    x-go-package: github.com/rtbe/clean-rest-api/domain/entity
+info: {}
+paths:
+  /auth/signin:
+    post:
+      consumes:
+      - application/json
+      operationId: signIn
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: TokenPair
+          schema:
+            $ref: '#/definitions/TokenPair'
+        "500":
+          $ref: '#/responses/errorResponse'
+      summary: Issues pair of access/refresh tokens.
+      tags:
+      - auth
+  /auth/signout:
+    post:
+      consumes:
+      - application/json
+      operationId: signOut
+      produces:
+      - application/json
+      responses:
+        "204":
+          $ref: '#/responses/emptyResponse'
+        "500":
+          $ref: '#/responses/errorResponse'
+      summary: Deletes a refresh token belonging to specific  user.
+      tags:
+      - auth
+  /auth/signup:
+    post:
+      consumes:
+      - application/json
+      operationId: signUp
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: User
+          schema:
+            $ref: '#/definitions/User'
+        "500":
+          $ref: '#/responses/errorResponse'
+      summary: Creates a new user.
+      tags:
+      - auth
+  /orderItems/{id}:
+    delete:
+      description: |-
+        Deletes an order item by it\`s id
+        .
+      operationId: deleteOrderItem
+      produces:
+      - application/json
+      responses:
+        "204":
+          $ref: '#/responses/emptyResponse'
+        "500":
+          $ref: '#/responses/errorResponse'
+      tags:
+      - orderItem
+    get:
+      description: |-
+        Gets an order item by it\`s id
+        and returns it\`s JSON representation.
+      operationId: getOrderItem
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: OrderItem
+          schema:
+            $ref: '#/definitions/OrderItem'
+        "500":
+          $ref: '#/responses/errorResponse'
+      tags:
+      - orderItem
+  /orders/:
+    post:
+      consumes:
+      - application/json
+      description: |-
+        Creates a new order
+        .
+      operationId: createOrder
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Order
+          schema:
+            $ref: '#/definitions/Order'
+        "500":
+          $ref: '#/responses/errorResponse'
+      tags:
+      - order
+  /orders/{id}:
+    delete:
+      description: |-
+        Deletes an order by it\`s id
+        and returns it\`s JSON representation.
+      operationId: deleteOrder
+      produces:
+      - application/json
+      responses:
+        "204":
+          $ref: '#/responses/emptyResponse'
+        "500":
+          $ref: '#/responses/errorResponse'
+      tags:
+      - order
+    get:
+      description: |-
+        Gets an order by it\`s id
+        and returns it\`s JSON representation.
+      operationId: getOrder
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Order
+          schema:
+            $ref: '#/definitions/Order'
+        "500":
+          $ref: '#/responses/errorResponse'
+      tags:
+      - order
+    patch:
+      consumes:
+      - application/json
+      description: |-
+        Updates a specific order
+        .
+      operationId: updateOrder
+      produces:
+      - application/json
+      responses:
+        "204":
+          $ref: '#/responses/emptyResponse'
+        "500":
+          $ref: '#/responses/errorResponse'
+      tags:
+      - order
+  /orders/{lastSeenID}/{id}:
+    get:
+      description: |-
+        This request uses two provided values to implement pagination: last seen id and limit.
+        Results of a request sorted by creation date of selected users and sended back as JSON.
+      operationId: listOrders
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Order
+          schema:
+            items:
+              $ref: '#/definitions/Order'
+            type: array
+        "500":
+          $ref: '#/responses/errorResponse'
+      summary: Gets paginated list of orders.
+      tags:
+      - order
+  /orders/{orderID}/orderItems/:
+    delete:
+      consumes:
+      - application/json
+      operationId: deleteOrderOrderItems
+      responses:
+        "204":
+          $ref: '#/responses/emptyResponse'
+        "500":
+          $ref: '#/responses/errorResponse'
+      summary: Deletes all order items related to an particular order.
+      tags:
+      - order
+    get:
+      description: Gets list of order items for particular order
+      operationId: listOrderOrderItems
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OrderItem
+          schema:
+            items:
+              $ref: '#/definitions/OrderItem'
+            type: array
+        "500":
+          $ref: '#/responses/errorResponse'
+      tags:
+      - orderItem
+  /orders/user/{id}:
+    delete:
+      consumes:
+      - application/json
+      operationId: deleteUserOrder
+      responses:
+        "204":
+          description: ""
+        "500":
+          $ref: '#/responses/errorResponse'
+      summary: Deletes all orders belonging to a specific user.
+      tags:
+      - order
+    patch:
+      consumes:
+      - application/json
+      description: |-
+        Updates an order item
+        .
+      operationId: updateOrderItem
+      produces:
+      - application/json
+      responses:
+        "204":
+          $ref: '#/responses/emptyResponse'
+        "500":
+          $ref: '#/responses/errorResponse'
+      tags:
+      - orderItem
+  /orders/user/{userID}:
+    get:
+      description: |-
+        Gets orders by user id
+        and returns their`s JSON representation.
+      operationId: listUserOrders
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Order
+          schema:
+            items:
+              $ref: '#/definitions/Order'
+            type: array
+        "500":
+          $ref: '#/responses/errorResponse'
+      tags:
+      - order
+  /products/:
+    post:
+      consumes:
+      - application/json
+      description: |-
+        Creates a new product
+        .
+      operationId: createProduct
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Product
+          schema:
+            $ref: '#/definitions/Product'
+        "500":
+          $ref: '#/responses/errorResponse'
+      tags:
+      - product
+  /products/{id}:
+    delete:
+      description: |-
+        Deletes a product by it\`s id
+        and returns it\`s JSON representation.
+      operationId: deleteProduct
+      produces:
+      - application/json
+      responses:
+        "204":
+          $ref: '#/responses/emptyResponse'
+        "500":
+          $ref: '#/responses/errorResponse'
+      tags:
+      - product
+    get:
+      description: |-
+        Gets a product by it\`s id
+        and returns it\`s JSON representation.
+      operationId: getProduct
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Product
+          schema:
+            $ref: '#/definitions/Product'
+        "500":
+          $ref: '#/responses/errorResponse'
+      tags:
+      - product
+    patch:
+      consumes:
+      - application/json
+      description: |-
+        Updates a product
+        .
+      operationId: updateProduct
+      responses:
+        "201":
+          $ref: '#/responses/emptyResponse'
+        "500":
+          $ref: '#/responses/errorResponse'
+      tags:
+      - product
+  /products/{lastSeenID}/{id}:
+    get:
+      description: |-
+        This request uses two provided values to implement pagination: last seen id and limit.
+        Results of a request sorted by creation date of selected users and sended back as JSON.
+      operationId: listProducts
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Product
+          schema:
+            items:
+              $ref: '#/definitions/Product'
+            type: array
+        "500":
+          $ref: '#/responses/errorResponse'
+      summary: Gets paginated list of products.
+      tags:
+      - product
+  /refreshTokens:
+    post:
+      consumes:
+      - application/json
+      operationId: refreshTokens
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: TokenPair
+          schema:
+            $ref: '#/definitions/TokenPair'
+        "500":
+          $ref: '#/responses/errorResponse'
+      summary: Receives pair of access/refresh tokens and returns fresh pair.
+      tags:
+      - auth
+  /status:
+    get:
+      operationId: status
+      produces:
+      - application/json
+      responses:
+        "200":
+          $ref: '#/responses/statusResponse'
+      summary: Gets application status.
+      tags:
+      - status
+  /users/{id}:
+    delete:
+      description: |-
+        Deletes a user
+        .
+      operationId: deleteUser
+      produces:
+      - application/json
+      responses:
+        "204":
+          $ref: '#/responses/emptyResponse'
+        "500":
+          $ref: '#/responses/errorResponse'
+      tags:
+      - user
+    patch:
+      consumes:
+      - application/json
+      description: |-
+        Updates a user
+        .
+      operationId: updateUser
+      responses:
+        "204":
+          $ref: '#/responses/emptyResponse'
+        "500":
+          $ref: '#/responses/errorResponse'
+      tags:
+      - user
+  /users/{lastSeenID}/{limit}:
+    get:
+      description: |-
+        This request uses two provided values to implement pagination: last seen id and limit.
+        Results of a request sorted by creation date of selected users and sended back as JSON.
+      operationId: listUsers
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User
+          schema:
+            items:
+              $ref: '#/definitions/User'
+            type: array
+        "500":
+          $ref: '#/responses/errorResponse'
+      summary: Gets paginated list of users.
+      tags:
+      - user
+  /users/id/{id}:
+    get:
+      consumes:
+      - application/json
+      description: |-
+        Gets a user by his id
+        and returns it\`s JSON representation.
+      operationId: getUser
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: User
+          schema:
+            $ref: '#/definitions/User'
+        "500":
+          $ref: '#/responses/errorResponse'
+      tags:
+      - user
+responses:
+  errorResponse:
+    description: Empty response
+    schema:
+      properties:
+        error:
+          example: There are some error
+          type: string
+          x-go-name: Error
+        fields:
+          type: string
+          x-go-name: Fields
+      type: object
+swagger: "2.0"
