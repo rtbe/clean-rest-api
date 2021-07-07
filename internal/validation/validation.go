@@ -2,6 +2,9 @@
 package validation
 
 import (
+	"reflect"
+	"strings"
+
 	"github.com/go-playground/locales/en"
 	ut "github.com/go-playground/universal-translator"
 	"github.com/go-playground/validator/v10"
@@ -23,6 +26,15 @@ func init() {
 
 	// Register english translations as default translations for validation error messages.
 	en_translations.RegisterDefaultTranslations(validate, translator)
+
+	// Use JSON tag names for errors instead of Go struct names.
+	validate.RegisterTagNameFunc(func(fld reflect.StructField) string {
+		name := strings.SplitN(fld.Tag.Get("json"), ",", 2)[0]
+		if name == "-" {
+			return ""
+		}
+		return name
+	})
 }
 
 func Check(v interface{}) error {
@@ -34,14 +46,16 @@ func Check(v interface{}) error {
 		}
 
 		var fieldErrors FieldErrors
+
 		for _, validationError := range validationErrors {
 			fieldError := FieldError{
 				Field: validationError.Field(),
-				Error: validationError.Error(),
+				Error: validationError.Translate(translator),
 			}
 			fieldErrors = append(fieldErrors, fieldError)
 		}
-		return fieldErrors
+
+		return &fieldErrors
 	}
 
 	return nil
