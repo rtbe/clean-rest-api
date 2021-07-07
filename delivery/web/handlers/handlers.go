@@ -29,15 +29,15 @@ func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	// Centralize error handling from handlerFunc here.
 	if err := h.H(w, r); err != nil {
-		info, err := mid.GetRequestInfo(r.Context())
-		if err != nil {
+		info, e := mid.GetRequestInfo(r.Context())
+		if e != nil {
+			h.L.Log("error", fmt.Sprintf(
+				"%s: GETTING REQUEST INFO: %v ",
+				info.ID, err.Error(),
+			))
 			return
 		}
 
-		h.L.Log("error", fmt.Sprintf(
-			"%s: ERROR: %v ",
-			info.ID, err.Error(),
-		))
 		// Customize handling of known and unknown errors.
 		switch err := errors.Cause(err).(type) {
 
@@ -45,7 +45,10 @@ func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		case RequestError:
 			info.StatusCode = err.Status
 			if err := respond(ctx, w, err, err.Status); err != nil {
-				h.L.Log("error", fmt.Sprintf("responding with error: %v", err.Error()))
+				h.L.Log("error", fmt.Sprintf(
+					"responding with error: %v",
+					err.Error(),
+				))
 			}
 
 			// Unknown error handling.
@@ -56,7 +59,10 @@ func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			info.StatusCode = http.StatusInternalServerError
 
 			if err := respond(ctx, w, e, http.StatusInternalServerError); err != nil {
-				h.L.Log("error", fmt.Sprintf("responding with error: %v", err.Error()))
+				h.L.Log("error", fmt.Sprintf(
+					"responding with error: %v",
+					err.Error(),
+				))
 			}
 		}
 	}
@@ -96,8 +102,8 @@ func respond(ctx context.Context, w http.ResponseWriter, data interface{}, statu
 func parseURLParamID(r *http.Request, key string) (string, error) {
 	v := chi.URLParam(r, key)
 	if v == "" {
-		e := fmt.Sprintf("there is no value with key: %v inside URL", key)
-		return "", errors.New(e)
+		es := fmt.Sprintf("there is no value with key: %v inside URL", key)
+		return "", errors.New(es)
 	}
 
 	if _, err := uuid.Parse(v); err != nil {
