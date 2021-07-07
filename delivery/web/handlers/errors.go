@@ -8,10 +8,10 @@ import (
 type RequestError struct {
 	ErrorText string `json:"error"`
 	Fields    string `json:"fields,omitempty"`
-	Status    int
+	Status    int    `json:"status_code"`
 }
 
-// Error lets RequestError implements error interface.
+// Error implements error interface.
 func (re RequestError) Error() string {
 	data, err := json.Marshal(re)
 	if err != nil {

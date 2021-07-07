@@ -83,7 +83,7 @@ type NewUser struct {
 	// Confirmation password of a user
 	//
 	// required: true
-	PasswordConfirm string `json:"password_confirm" validate:"reqired,eqfield=Password"`
+	PasswordConfirm string `json:"password_confirm" validate:"required,eqfield=Password"`
 
 	// Set of user roles
 	//

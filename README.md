@@ -12,7 +12,7 @@ This project is build for the sake of practice of different approaches to buildi
 
 **Some neat tricks&tips applied in this project:**
 
-- Automatization of boring stuff with Makefile.
+- Automatization of boring stuff with Makefile (To run a project just type ```make run```).
 - Centralized error handling of errors. As well as allowing decide whenever we need to show exact error message to user or show generic one. That lets us hide errors with implementation details from users and log them internally.
 - Built in OpenApi v2 (Swagger) documentation.
 - More effective kind of pagination [do not use offset for pagination](https://use-the-index-luke.com/no-offset).
@@ -22,6 +22,8 @@ This project is build for the sake of practice of different approaches to buildi
 - Database migrations.
 - Validations for incoming data.
 - Built it debugging with debug/pprof.
+
+**Required envirionment variables for the application are located inside .env file**
 
 ### Dependencies
 
