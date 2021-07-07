@@ -5,7 +5,7 @@ swagger: check-swagger-install
 	swagger generate spec -o ./swagger.yaml --scan-models
 	
 docker-up:
-	docker-compose -f "docker-compose.yml" up --detach --remove-orphans
+	docker-compose -f "docker-compose.yml" up --detach --remove-orphans --build
 	
 docker-down:
 	docker-compose -f 'docker-compose.yml' down --remove-orphans
